@@ -3,6 +3,7 @@
 <head>
 <title>For Bhutu 💖</title>
 <style>
+
 body {
   margin:0;
   font-family: 'Segoe UI', sans-serif;
@@ -10,6 +11,38 @@ body {
   text-align:center;
   color:white;
   overflow-x:hidden;
+}
+
+/* Sparkle Background */
+body::before {
+  content: "";
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: sparkle 20s linear infinite;
+  opacity: 0.2;
+}
+
+@keyframes sparkle {
+  from {transform: translate(0,0);}
+  to {transform: translate(-100px,-100px);}
+}
+
+/* Fade In Animation */
+.section {
+  padding:40px 20px;
+  opacity:0;
+  transform: translateY(20px);
+  transition: all 1.2s ease;
+  display:none;
+}
+
+.section.show {
+  display:block;
+  opacity:1;
+  transform: translateY(0);
 }
 
 h1, h2 {
@@ -25,20 +58,35 @@ button {
   color:#ff6f91;
   cursor:pointer;
   margin-top:20px;
+  transition:0.3s;
 }
 
-.section {
-  padding:40px 20px;
-  display:none;
+button:hover {
+  transform:scale(1.1);
 }
 
-img {
-  width:280px;
+input {
+  padding:10px;
   border-radius:20px;
-  margin-top:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  border:none;
+  text-align:center;
 }
 
+/* Carousel */
+.carousel {
+  position: relative;
+  width: 300px;
+  margin: auto;
+}
+
+.carousel img {
+  width:100%;
+  border-radius:20px;
+  display:none;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Floating Hearts */
 .heart {
   position: fixed;
   color: red;
@@ -51,68 +99,81 @@ img {
   100% {transform: translateY(-10vh);}
 }
 
-input {
-  padding:10px;
-  border-radius:20px;
-  border:none;
-  text-align:center;
+/* Kiss Explosion */
+.kiss {
+  position: fixed;
+  font-size: 30px;
+  animation: explode 1.5s ease-out forwards;
 }
+
+@keyframes explode {
+  0% {transform: scale(0.5); opacity:1;}
+  100% {transform: translate(var(--x), var(--y)) scale(1.5); opacity:0;}
+}
+
+.typewriter {
+  width:70%;
+  margin:auto;
+  font-size:18px;
+  min-height:80px;
+}
+
 </style>
 </head>
 
 <body>
 
 <div id="login">
-  <h1>💌 A Little Surprise For Bhutu 💌</h1>
-  <p>Enter the special password to open your Valentine surprise</p>
-  <input type="password" id="password" placeholder="Enter password">
+  <h1>💌 A Surprise For Bhutu 💌</h1>
+  <p>Enter the special password</p>
+  <input type="password" id="password" placeholder="Password">
   <br>
-  <button onclick="checkPassword()">Open My Surprise ❤️</button>
+  <button onclick="checkPassword()">Open My Heart ❤️</button>
 </div>
 
 <div id="mainContent" style="display:none;">
 
-  <h1>Happy First Valentine’s Day Bhutu 💕</h1>
-  <p>After loving you for 15 years… I finally get to call you mine on Valentine’s Day.</p>
+  <h1>Happy Valentine’s Day Bhutu 💕</h1>
+  <p>After 15 years of loving you… this is for you.</p>
+
+  <button onclick="startMagic()">Start The Magic ✨</button>
 
   <div class="section" id="timeline">
-    <h2>🕰 Our 15 Year Journey</h2>
-    <p>✨ The year I realized you were different.</p>
-    <p>✨ The years I silently loved you.</p>
-    <p>✨ The day I knew I never wanted anyone else.</p>
-    <p>✨ And now… our first Valentine together.</p>
+    <h2>🕰 Our Story</h2>
+    <p>From being a kid and secretly loving you…</p>
+    <p>To dreaming of this exact moment…</p>
+    <p>To finally call you mine.</p>
   </div>
 
   <div class="section" id="memory">
-    <h2>📸 My Favorite Memory</h2>
-    <p>The surprise I gave you at my home…  
-    The way you looked at me that day is something I will never forget.</p>
-    <img src="memory.jpg">
+    <h2>📸 Our Favorite Memory</h2>
+    <p>The smile and joy on your face when I surprised you at my home.</p>
+    <div class="carousel">
+      <img src="photo1.jpg" class="slide">
+      <img src="photo2.jpg" class="slide">
+      <img src="photo3.jpg" class="slide">
+      <img src="photo4.jpg" class="slide">
+    </div>
   </div>
 
-  <div class="section" id="reasons">
-    <h2>💖 Reasons I Love You</h2>
-    <p id="loveReason">Click below to see why I love you</p>
-    <button onclick="newReason()">Tell Me ❤️</button>
+  <div class="section" id="letter">
+    <h2>💌 A Letter For You</h2>
+    <div class="typewriter" id="typeText"></div>
   </div>
 
-  <div class="section" id="future">
-    <h2>🌙 Our Future</h2>
-    <p>I can’t wait for future Valentine’s.</p>
-    <p>I can’t wait for random late night talks.</p>
-    <p>I can’t wait to grow old with you.</p>
-    <p>I would choose you in every lifetime.</p>
+  <div class="section" id="forever">
+    <h2>💘 One Question...</h2>
+    <p>Will you be my forever Valentine?</p>
+    <button onclick="foreverYes()">YES 💖</button>
   </div>
 
   <div class="section" id="final">
-    <h2>🎁 One Last Thing...</h2>
-    <p>Bhutu, I loved you at 15.  
-    I love you now.  
-    And I will love you in every version of our future.</p>
-    <p>Thank you for being my home. 💕</p>
+    <h2>🌙 Forever With You</h2>
+    <p>You were my first love.</p>
+    <p>You are my greatest love now.</p>
+    <p>And you will always be my future.</p>
+    <p>I love you endlessly, Bhutu. 💕</p>
   </div>
-
-  <button onclick="showSections()">Start The Magic ✨</button>
 
   <audio autoplay loop>
     <source src="love.mp3" type="audio/mpeg">
@@ -122,39 +183,77 @@ input {
 
 <script>
 
+/* PASSWORD */
 function checkPassword() {
   var entered = document.getElementById("password").value;
-  var correct = "1708";  // CHANGE THIS PASSWORD
+  var correct = "1708"; // CHANGE THIS
 
   if (entered === correct) {
     document.getElementById("login").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
   } else {
-    alert("Wrong password, try again my love ❤️");
+    alert("Wrong password ❤️ Try again.");
   }
 }
 
-function showSections() {
-  document.getElementById("timeline").style.display = "block";
-  document.getElementById("memory").style.display = "block";
-  document.getElementById("reasons").style.display = "block";
-  document.getElementById("future").style.display = "block";
-  document.getElementById("final").style.display = "block";
+/* SHOW SECTIONS WITH FADE */
+function startMagic() {
+  showSection("timeline");
+  setTimeout(() => showSection("memory"), 800);
+  setTimeout(() => showSection("letter"), 1600);
+  setTimeout(() => showSection("forever"), 2400);
+  startCarousel();
+  typeWriter();
 }
 
-var reasons = [
-"Because your smile still makes my heart race.",
-"Because you have had my heart since we were 15.",
-"Because life feels softer when I am with you.",
-"Because you make ordinary days feel special.",
-"Because you are my favorite person in every universe."
-];
-
-function newReason() {
-  var random = reasons[Math.floor(Math.random() * reasons.length)];
-  document.getElementById("loveReason").innerHTML = random;
+function showSection(id) {
+  var el = document.getElementById(id);
+  el.style.display = "block";
+  setTimeout(() => el.classList.add("show"), 50);
 }
 
+/* CAROUSEL */
+var slideIndex = 0;
+function startCarousel() {
+  var slides = document.getElementsByClassName("slide");
+  for (var i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) { slideIndex = 1; }
+  slides[slideIndex-1].style.display = "block";
+  setTimeout(startCarousel, 3000);
+}
+
+/* TYPEWRITER */
+var text = "Bhutu, I have loved you from the day I knew what Love is. Every memory led me back to you. This journey was beautiful… but nothing is more beautiful than us.";
+var i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById("typeText").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 40);
+  }
+}
+
+/* KISS EXPLOSION */
+function foreverYes() {
+  showSection("final");
+  for (let i = 0; i < 20; i++) {
+    const kiss = document.createElement("div");
+    kiss.className = "kiss";
+    kiss.innerHTML = "💋";
+    kiss.style.left = "50%";
+    kiss.style.top = "50%";
+    kiss.style.setProperty('--x', (Math.random()*600-300)+"px");
+    kiss.style.setProperty('--y', (Math.random()*600-300)+"px");
+    document.body.appendChild(kiss);
+    setTimeout(() => kiss.remove(), 1500);
+  }
+}
+
+/* FLOATING HEARTS */
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -162,12 +261,8 @@ function createHeart() {
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.animationDuration = Math.random() * 3 + 3 + "s";
   document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
+  setTimeout(() => heart.remove(), 6000);
 }
-
 setInterval(createHeart, 400);
 
 </script>
