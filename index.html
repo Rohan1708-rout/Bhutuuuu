@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For Bhutu 💖</title>
+<style>
+body {
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+  text-align:center;
+  color:white;
+  overflow-x:hidden;
+}
+
+h1, h2 {
+  margin-top:40px;
+}
+
+button {
+  padding:12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#ff6f91;
+  cursor:pointer;
+  margin-top:20px;
+}
+
+.section {
+  padding:40px 20px;
+  display:none;
+}
+
+img {
+  width:280px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.heart {
+  position: fixed;
+  color: red;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  0% {transform: translateY(100vh);}
+  100% {transform: translateY(-10vh);}
+}
+
+input {
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div id="login">
+  <h1>💌 A Little Surprise For Bhutu 💌</h1>
+  <p>Enter the special password to open your Valentine surprise</p>
+  <input type="password" id="password" placeholder="Enter password">
+  <br>
+  <button onclick="checkPassword()">Open My Surprise ❤️</button>
+</div>
+
+<div id="mainContent" style="display:none;">
+
+  <h1>Happy First Valentine’s Day Bhutu 💕</h1>
+  <p>After loving you for 15 years… I finally get to call you mine on Valentine’s Day.</p>
+
+  <div class="section" id="timeline">
+    <h2>🕰 Our 15 Year Journey</h2>
+    <p>✨ The year I realized you were different.</p>
+    <p>✨ The years I silently loved you.</p>
+    <p>✨ The day I knew I never wanted anyone else.</p>
+    <p>✨ And now… our first Valentine together.</p>
+  </div>
+
+  <div class="section" id="memory">
+    <h2>📸 My Favorite Memory</h2>
+    <p>The surprise I gave you at my home…  
+    The way you looked at me that day is something I will never forget.</p>
+    <img src="memory.jpg">
+  </div>
+
+  <div class="section" id="reasons">
+    <h2>💖 Reasons I Love You</h2>
+    <p id="loveReason">Click below to see why I love you</p>
+    <button onclick="newReason()">Tell Me ❤️</button>
+  </div>
+
+  <div class="section" id="future">
+    <h2>🌙 Our Future</h2>
+    <p>I can’t wait for future Valentine’s.</p>
+    <p>I can’t wait for random late night talks.</p>
+    <p>I can’t wait to grow old with you.</p>
+    <p>I would choose you in every lifetime.</p>
+  </div>
+
+  <div class="section" id="final">
+    <h2>🎁 One Last Thing...</h2>
+    <p>Bhutu, I loved you at 15.  
+    I love you now.  
+    And I will love you in every version of our future.</p>
+    <p>Thank you for being my home. 💕</p>
+  </div>
+
+  <button onclick="showSections()">Start The Magic ✨</button>
+
+  <audio autoplay loop>
+    <source src="love.mp3" type="audio/mpeg">
+  </audio>
+
+</div>
+
+<script>
+
+function checkPassword() {
+  var entered = document.getElementById("password").value;
+  var correct = "1708";  // CHANGE THIS PASSWORD
+
+  if (entered === correct) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  } else {
+    alert("Wrong password, try again my love ❤️");
+  }
+}
+
+function showSections() {
+  document.getElementById("timeline").style.display = "block";
+  document.getElementById("memory").style.display = "block";
+  document.getElementById("reasons").style.display = "block";
+  document.getElementById("future").style.display = "block";
+  document.getElementById("final").style.display = "block";
+}
+
+var reasons = [
+"Because your smile still makes my heart race.",
+"Because you have had my heart since we were 15.",
+"Because life feels softer when I am with you.",
+"Because you make ordinary days feel special.",
+"Because you are my favorite person in every universe."
+];
+
+function newReason() {
+  var random = reasons[Math.floor(Math.random() * reasons.length)];
+  document.getElementById("loveReason").innerHTML = random;
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 400);
+
+</script>
+
+</body>
+</html>
