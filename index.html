@@ -303,18 +303,16 @@ And you will always be my future.</p>
 const correctPassword = "iloveyou";
 
 function checkPassword(){
-let input=document.getElementById("passwordInput");
-let message=document.getElementById("wrongPass");
+    let input = document.getElementById("passwordInput").value.trim();
 
-if(input.value.trim() === correctPassword){
-document.getElementById("passwordScreen").style.display="none";
-document.getElementById("mainContent").style.display="block";
-}else{
-input.classList.add("shake");
-message.innerText="Wrong password… try again my love 😌";
-setTimeout(()=>input.classList.remove("shake"),400);
+    if(input === "1234"){
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+    } else {
+        document.getElementById("wrongPass").innerText = "Wrong password 😌";
+    }
 }
-}
+
 
 /* ================= START ================= */
 
