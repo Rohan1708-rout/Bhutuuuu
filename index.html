@@ -306,7 +306,7 @@ function checkPassword(){
 let input=document.getElementById("passwordInput");
 let message=document.getElementById("wrongPass");
 
-if(input.value===correctPassword){
+if(input.value.trim() === correctPassword){
 document.getElementById("passwordScreen").style.display="none";
 document.getElementById("mainContent").style.display="block";
 }else{
