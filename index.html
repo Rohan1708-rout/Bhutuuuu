@@ -1,127 +1,146 @@
-e<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-<title>For Bhutu 💖</title>
+<title>For Bhutu ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 
-body {
-    margin:0;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
+
+body{
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
-  text-align:center;
+  background:#0f0f14;
   color:white;
   overflow-x:hidden;
-  position: relative;
-  z-index: 1;
 }
 
-/* Sparkle Background */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(white 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: sparkle 20s linear infinite;
-  opacity: 0.2;
-  pointer-events: none;
-  z-index: -1;
+/* GENERAL SECTION STYLE */
+section{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:60px 10%;
+  position:relative;
+  text-align:center;
 }
 
-@keyframes sparkle {
-  from {transform: translate(0,0);}
-  to {transform: translate(-100px,-100px);}
-}
-
-/* Fade In Animation */
-.section {
-  padding:40px 20px;
+/* FADE ANIMATION */
+.fade{
   opacity:0;
-  transform: translateY(20px);
-  transition: all 1.2s ease;
-  display:none;
+  transform:translateY(40px);
+  transition:1.2s ease;
 }
 
-.section.show {
-  display:block;
+.fade.show{
   opacity:1;
-  transform: translateY(0);
+  transform:translateY(0);
 }
 
-h1, h2 {
-  margin-top:40px;
+/* HERO SECTION */
+.hero{
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url('photo1.jpg') center/cover no-repeat;
 }
 
-button {
-  padding:12px 25px;
-  font-size:16px;
+.hero h1{
+  font-size:50px;
+  letter-spacing:2px;
+}
+
+.hero p{
+  margin-top:20px;
+  font-size:20px;
+  opacity:0.9;
+}
+
+/* BUTTON */
+button{
+  margin-top:30px;
+  padding:14px 35px;
   border:none;
   border-radius:30px;
-  background:white;
-  color:#ff6f91;
+  font-size:16px;
+  background:#ff4d6d;
+  color:white;
   cursor:pointer;
-  margin-top:20px;
   transition:0.3s;
 }
 
-button:hover {
+button:hover{
   transform:scale(1.1);
+  background:#ff758f;
 }
 
-input {
-  padding:10px;
-  border-radius:20px;
-  border:none;
-  text-align:center;
+/* STORY SECTION */
+.story{
+  background: linear-gradient(to bottom,#0f0f14,#1c1c26);
 }
 
-/* Carousel */
-.carousel {
-  position: relative;
-  width: 300px;
-  margin: auto;
+/* GALLERY */
+.gallery{
+  background:#111;
 }
 
-.carousel img {
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
   width:100%;
-  border-radius:20px;
-  display:none;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
-/* Floating Hearts */
-.heart {
-  position: fixed;
-  color: red;
-  font-size: 20px;
-  animation: float 6s linear infinite;
+.grid img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  border-radius:15px;
+  transition:0.4s;
 }
 
-@keyframes float {
-  0% {transform: translateY(100vh);}
-  100% {transform: translateY(-10vh);}
+.grid img:hover{
+  transform:scale(1.05);
+  filter:brightness(1.1);
 }
 
-/* Kiss Explosion */
-.kiss {
-  position: fixed;
-  font-size: 30px;
-  animation: explode 1.5s ease-out forwards;
+/* LETTER SECTION */
+.letter{
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+              url('5.jpeg') center/cover fixed;
 }
 
-@keyframes explode {
-  0% {transform: scale(0.5); opacity:1;}
-  100% {transform: translate(var(--x), var(--y)) scale(1.5); opacity:0;}
+.typewriter{
+  max-width:700px;
+  font-size:20px;
+  line-height:1.6;
 }
 
-.typewriter {
-  width:70%;
-  margin:auto;
-  font-size:18px;
-  min-height:80px;
+/* FOREVER SECTION */
+.forever{
+  background: linear-gradient(to bottom,#1c1c26,#0f0f14);
+}
+
+/* FINAL */
+.final{
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+              url('photo10.jpg') center/cover no-repeat;
+}
+
+/* KISS EXPLOSION */
+.kiss{
+  position:fixed;
+  font-size:30px;
+  animation:explode 1.5s ease-out forwards;
+}
+
+@keyframes explode{
+  0%{transform:scale(0.5);opacity:1;}
+  100%{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}
 }
 
 </style>
@@ -129,147 +148,115 @@ input {
 
 <body>
 
-<div id="login">
-  <h1>💌 A Surprise For Bhutu 💌</h1>
-  <p>Enter the special password</p>
-  <input type="password" id="password" placeholder="Password">
-  <br>
-  <button onclick="checkPassword()">Open My Heart ❤️</button>
-</div>
+<section class="hero fade">
+  <h1>Bhutu ❤️</h1>
+  <p>15 years later… our first Valentine.</p>
+  <button onclick="startExperience()">Begin Our Story</button>
+</section>
 
-<div id="mainContent" style="display:none;">
+<section class="story fade">
+  <h2>Our Journey</h2>
+  <p>From being 15 and quietly loving you…<br>
+  To finally celebrate this Valentine together.<br>
+  Every year led me back to you.</p>
+</section>
 
-  <h1>Happy Valentine’s Day Bhutu 💕</h1>
-  <p>After 15 years of loving you… this is for you.</p>
-
-  <button onclick="startMagic()">Start The Magic ✨</button>
-
-  <div class="section" id="timeline">
-    <h2>🕰 Our Story</h2>
-    <p>From being a kid and secretly loving you…</p>
-    <p>To dreaming of this exact moment…</p>
-    <p>To finally call you mine.</p>
+<section class="gallery fade">
+  <h2>Our Memories</h2>
+  <div class="grid">
+    <img src="1.jpeg">
+    <img src="2.jpeg">
+    <img src="3.jpeg">
+    <img src="4.jpeg">
+    <img src="5.jpeg">
+    <img src="6.jpeg">
+    <img src="7.jpeg">
+    <img src="8.jpeg">
+    <img src="9.jpeg">
+    <img src="10.jpeg">
+    <img src="11.jpeg">
+    <img src="12.jpeg">
+    <img src="13.jpeg">
+    <img src="14.jpeg">
+    <img src="15.jpeg">
+    <img src="16.jpeg">
+    <img src="17.jpeg">
+    <img src="18.jpeg">
+    <img src="19.jpeg">
+    <img src="20.jpeg">
+    <img src="21.jpeg">
+    <img src="22.jpeg">
+    <img src="23.jpeg">
+    <img src="24.jpeg">
   </div>
+</section>
 
-  <div class="section" id="memory">
-    <h2>📸 Our Favorite Memory</h2>
-    <p>The smile and joy on your face when I surprised you at my home.</p>
-    <div class="carousel">
-      <img src="16.jpeg" class="slide">
-      <img src="17.jpeg" class="slide">
-      <img src="22.jpeg" class="slide">
-      <img src="23.jpeg" class="slide">
-    </div>
-  </div>
+<section class="letter fade">
+  <h2>A Letter For You</h2>
+  <div class="typewriter" id="typeText"></div>
+</section>
 
-  <div class="section" id="letter">
-    <h2>💌 A Letter For You</h2>
-    <div class="typewriter" id="typeText"></div>
-  </div>
+<section class="forever fade">
+  <h2>Will You Be My Forever Valentine?</h2>
+  <button onclick="foreverYes()">YES ❤️</button>
+</section>
 
-  <div class="section" id="forever">
-    <h2>💘 One Question...</h2>
-    <p>Will you be my forever Valentine?</p>
-    <button onclick="foreverYes()">YES 💖</button>
-  </div>
+<section class="final fade">
+  <h2>Forever With You</h2>
+  <p>You were my first love at 15.<br>
+  You are my greatest love now.<br>
+  And you will always be my future.</p>
+</section>
 
-  <div class="section" id="final">
-    <h2>🌙 Forever With You</h2>
-    <p>You were my first love.</p>
-    <p>You are my greatest love now.</p>
-    <p>And you will always be my future.</p>
-    <p>I love you endlessly, Bhutu. 💕</p>
-  </div>
-
-  <audio autoplay loop>
-    <source src="manchala.mp3" type="audio/mpeg">
-  </audio>
-
-</div>
+<audio id="bgMusic" loop>
+  <source src="manchala.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
-/* PASSWORD */
-function checkPassword() {
-  var entered = document.getElementById("password").value;
-  var correct = "1708"; // CHANGE THIS
+/* Fade on scroll */
+const faders = document.querySelectorAll('.fade');
+window.addEventListener('scroll', () => {
+  faders.forEach(el=>{
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 100){
+      el.classList.add('show');
+    }
+  });
+});
 
-  if (entered === correct) {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-  } else {
-    alert("Wrong password ❤️ Try again.");
-  }
+/* Start experience */
+function startExperience(){
+  document.getElementById("bgMusic").play();
+  window.scrollTo({top:window.innerHeight,behavior:'smooth'});
 }
 
-/* SHOW SECTIONS WITH FADE */
-function startMagic() {
-  showSection("timeline");
-  setTimeout(() => showSection("memory"), 800);
-  setTimeout(() => showSection("letter"), 1600);
-  setTimeout(() => showSection("forever"), 2400);
-  startCarousel();
-  typeWriter();
-}
-
-function showSection(id) {
-  var el = document.getElementById(id);
-  el.style.display = "block";
-  setTimeout(() => el.classList.add("show"), 50);
-}
-
-/* CAROUSEL */
-var slideIndex = 0;
-function startCarousel() {
-  var slides = document.getElementsByClassName("slide");
-  for (var i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) { slideIndex = 1; }
-  slides[slideIndex-1].style.display = "block";
-  setTimeout(startCarousel, 3000);
-}
-
-/* TYPEWRITER */
-var text = "Bhutu, I have loved you from the day I knew what Love is. Every memory led me back to you. This journey was beautiful… but nothing is more beautiful than us.";
-var i = 0;
-
-function typeWriter() {
-  if (i < text.length) {
-    document.getElementById("typeText").innerHTML += text.charAt(i);
+/* Typewriter */
+var text="Happy Valentine’s Day, my love 💖 After loving you quietly, deeply, and endlessly for fifteen years, I still get butterflies knowing that this is our very first Valentine’s Day together. It feels like all those years were just my heart patiently waiting for this exact moment to finally hold your hand without hesitation, to call you mine out loud, to celebrate a love that has grown up with us. You’ve been my favorite chapter for so long, and now I get to live inside the story instead of just dreaming about it. If fifteen years of loving you has taught me anything, it’s that my heart chose right from the very beginning. I don’t just love you I feel at home with you. Here’s to our first Valentine’s Day… and to every beautiful one we’ll share from now on. 🌹✨";
+var i=0;
+function typeWriter(){
+  if(i<text.length){
+    document.getElementById("typeText").innerHTML+=text.charAt(i);
     i++;
-    setTimeout(typeWriter, 40);
+    setTimeout(typeWriter,40);
   }
 }
+typeWriter();
 
-/* KISS EXPLOSION */
-function foreverYes() {
-  showSection("final");
-  for (let i = 0; i < 20; i++) {
-    const kiss = document.createElement("div");
-    kiss.className = "kiss";
-    kiss.innerHTML = "💋";
-    kiss.style.left = "50%";
-    kiss.style.top = "50%";
-    kiss.style.setProperty('--x', (Math.random()*600-300)+"px");
-    kiss.style.setProperty('--y', (Math.random()*600-300)+"px");
+/* Kiss Explosion */
+function foreverYes(){
+  for(let i=0;i<25;i++){
+    const kiss=document.createElement("div");
+    kiss.className="kiss";
+    kiss.innerHTML="💋";
+    kiss.style.left="50%";
+    kiss.style.top="50%";
+    kiss.style.setProperty('--x',(Math.random()*600-300)+"px");
+    kiss.style.setProperty('--y',(Math.random()*600-300)+"px");
     document.body.appendChild(kiss);
-    setTimeout(() => kiss.remove(), 1500);
+    setTimeout(()=>kiss.remove(),1500);
   }
 }
-
-/* FLOATING HEARTS */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = Math.random() * 3 + 3 + "s";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 400);
 
 </script>
 
