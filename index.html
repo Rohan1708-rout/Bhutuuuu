@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 <title>For Bhutu ❤️</title>
 
 <style>
@@ -11,6 +11,7 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 scroll-behavior:smooth;
+cursor:none; /* hide default cursor */
 }
 
 body{
@@ -20,7 +21,72 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ================= PASSWORD SCREEN ================= */
+/* ================= CUSTOM HEART CURSOR ================= */
+
+#cursor{
+position:fixed;
+font-size:24px;
+pointer-events:none;
+z-index:100000;
+transform:translate(-50%,-50%);
+animation:pulse 1s infinite alternate;
+}
+
+@keyframes pulse{
+from{transform:translate(-50%,-50%) scale(1);}
+to{transform:translate(-50%,-50%) scale(1.4);}
+}
+
+/* ================= FLOATING HEARTS ================= */
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:20px;
+animation:floatUp linear forwards;
+opacity:0.8;
+z-index:1;
+}
+
+@keyframes floatUp{
+to{
+transform:translateY(-110vh);
+opacity:0;
+}
+}
+
+/* ================= CINEMATIC INTRO ================= */
+
+#intro{
+position:fixed;
+width:100%;
+height:100vh;
+background:black;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999999;
+animation:fadeOut 4s forwards;
+animation-delay:3s;
+}
+
+#intro h1{
+font-size:70px;
+color:#ff4d6d;
+animation:cinema 3s ease-in-out;
+}
+
+@keyframes cinema{
+0%{letter-spacing:10px; opacity:0;}
+50%{letter-spacing:3px; opacity:1;}
+100%{letter-spacing:6px;}
+}
+
+@keyframes fadeOut{
+to{opacity:0; visibility:hidden;}
+}
+
+/* ================= PASSWORD ================= */
 
 #passwordScreen{
 position:fixed;
@@ -28,7 +94,6 @@ width:100%;
 height:100vh;
 background:url('11.jpeg') center/cover no-repeat;
 display:flex;
-flex-direction:column;
 align-items:center;
 justify-content:center;
 z-index:99999;
@@ -49,20 +114,37 @@ text-align:center;
 }
 
 input{
-padding:12px;
+padding:15px;
 border-radius:30px;
 border:none;
 outline:none;
-margin-top:15px;
+width:300px;
 text-align:center;
+font-size:18px;
+}
+
+button{
+padding:18px 45px;
+border:none;
+border-radius:40px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+margin:20px;
+transition:0.3s;
+font-size:20px;
+}
+
+button:hover{
+transform:scale(1.2);
 }
 
 #wrongPass{
 color:#ff99ac;
-margin-top:15px;
+margin-top:20px;
 }
 
-/* ================= MAIN CONTENT ================= */
+/* ================= MAIN ================= */
 
 #mainContent{
 display:none;
@@ -75,7 +157,7 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 text-align:center;
-padding:60px 10%;
+padding:80px 15%;
 position:relative;
 background-size:cover;
 background-position:center;
@@ -89,7 +171,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.65);
+background:rgba(0,0,0,0.6);
 z-index:0;
 }
 
@@ -99,118 +181,33 @@ z-index:2;
 }
 
 .glow{
-font-size:55px;
+font-size:80px;
 animation:glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow{
-from{ text-shadow:0 0 10px #ff4d6d,0 0 20px #ff4d6d;}
-to{ text-shadow:0 0 20px #ff99ac,0 0 40px #ff99ac;}
+from{ text-shadow:0 0 15px #ff4d6d;}
+to{ text-shadow:0 0 40px #ff99ac;}
 }
 
-button{
-padding:14px 35px;
-border:none;
-border-radius:30px;
-background:#ff4d6d;
-color:white;
-cursor:pointer;
-margin:10px;
-transition:0.3s;
+/* NO BUTTON RUN AWAY */
+
+#noBtn{
+position:relative;
 }
 
-button:hover{
-transform:scale(1.15);
-}
-
-/* CAROUSEL */
-
-.carousel{
-overflow:hidden;
-width:100%;
-margin-top:40px;
-}
-
-.carousel-track{
-display:flex;
-width:calc(250px * 48);
-animation:scroll 40s linear infinite;
-}
-
-.carousel img{
-width:250px;
-height:300px;
-object-fit:cover;
-border-radius:15px;
-margin-right:15px;
-}
-
-.carousel:hover .carousel-track{
-animation-play-state:paused;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
-}
-
-/* SHAKE */
-
-@keyframes shake{
-0%{transform:translateX(0);}
-25%{transform:translateX(-6px);}
-50%{transform:translateX(6px);}
-75%{transform:translateX(-6px);}
-100%{transform:translateX(0);}
-}
-
-.shake{
-animation:shake 0.4s;
-}
-
-/* SOULMATE METER */
-
-#meter{
-margin-top:20px;
-font-size:20px;
-color:#ff99ac;
-}
-
-/* KISS */
+/* KISS EXPLOSION */
 
 .kiss{
 position:fixed;
-font-size:60px;
-animation:explode 2s ease-out forwards;
+font-size:100px;
+animation:explode 2.5s ease-out forwards;
 z-index:9999;
 }
 
 @keyframes explode{
 0%{transform:scale(0.3);opacity:1;}
-100%{transform:translate(var(--x),var(--y)) scale(2.5);opacity:0;}
-}
-
-/* ROSE PETALS */
-
-.petal{
-position:fixed;
-top:-10px;
-font-size:24px;
-animation:fall linear forwards;
-z-index:9999;
-}
-
-@keyframes fall{
-to{
-transform:translateY(110vh) rotate(360deg);
-opacity:0;
-}
-}
-
-#noMessage{
-margin-top:20px;
-font-size:22px;
-color:#ffb3c1;
+100%{transform:translate(var(--x),var(--y)) scale(4);opacity:0;}
 }
 
 </style>
@@ -218,191 +215,111 @@ color:#ffb3c1;
 
 <body>
 
-<!-- PASSWORD SCREEN -->
+<!-- CUSTOM CURSOR -->
+<div id="cursor">💖</div>
+
+<!-- CINEMATIC INTRO -->
+<div id="intro">
+<h1>Our Love Story ❤️</h1>
+</div>
+
+<!-- PASSWORD -->
 <div id="passwordScreen">
 <div id="passwordBox">
-<h2>Enter Our Secret Code 💌</h2>
+<h2 style="font-size:40px;">Enter Our Secret Code 💌</h2>
 <input type="password" id="passwordInput" placeholder="Enter password">
-<br>
+<br><br>
 <button onclick="checkPassword()">Unlock ❤️</button>
 <div id="wrongPass"></div>
 </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="mainContent">
 
 <section style="background-image:url('8.jpeg');">
 <h1 class="glow">Bhutu ❤️</h1>
-<p>From stranger… to forever.</p>
+<p style="font-size:28px;">From stranger… to forever.</p>
 <button onclick="start()">Begin Our Story</button>
 </section>
 
-<section style="background-image:url('13.jpeg');">
-<h2>Our Memories</h2>
-
-<div class="carousel">
-<div class="carousel-track">
-
-<!-- 24 photos duplicated -->
-<img src="1.jpeg"><img src="2.jpeg"><img src="3.jpeg">
-<img src="4.jpeg"><img src="5.jpeg"><img src="6.jpeg">
-<img src="7.jpeg"><img src="8.jpeg"><img src="9.jpeg">
-<img src="10.jpeg"><img src="11.jpeg"><img src="12.jpeg">
-<img src="13.jpeg"><img src="14.jpeg"><img src="15.jpeg">
-<img src="16.jpeg"><img src="17.jpeg"><img src="18.jpeg">
-<img src="19.jpeg"><img src="20.jpeg"><img src="21.jpeg">
-<img src="22.jpeg"><img src="23.jpeg"><img src="24.jpeg">
-
-<img src="1.jpeg"><img src="2.jpeg"><img src="3.jpeg">
-<img src="4.jpeg"><img src="5.jpeg"><img src="6.jpeg">
-<img src="7.jpeg"><img src="8.jpeg"><img src="9.jpeg">
-<img src="10.jpeg"><img src="11.jpeg"><img src="12.jpeg">
-<img src="13.jpeg"><img src="14.jpeg"><img src="15.jpeg">
-<img src="16.jpeg"><img src="17.jpeg"><img src="18.jpeg">
-<img src="19.jpeg"><img src="20.jpeg"><img src="21.jpeg">
-<img src="22.jpeg"><img src="23.jpeg"><img src="24.jpeg">
-
-</div>
-</div>
-</section>
-
 <section style="background-image:url('18.jpeg');">
-<h2>Will You Be My Valentine?</h2>
-
-<button id="yesBtn" onclick="yesClicked()">YES ❤️</button>
-<button id="noBtn" onclick="noClicked()">NO 🙈</button>
-
-<div id="noMessage"></div>
-</section>
-
-<section id="riddleSection" style="background-image:url('26.jpeg'); display:none;">
-<h2>Before Forever… One Small Challenge 😌</h2>
-<p id="questionText"></p>
-<div id="options"></div>
-<div id="meter"></div>
+<h2 style="font-size:55px;">Will You Be My Valentine?</h2>
+<button id="yesBtn" onclick="finalReveal()">YES ❤️</button>
+<button id="noBtn">NO 🙈</button>
 </section>
 
 <section id="finalSection" style="background-image:url('25.jpeg'); display:none;">
-<h2>Forever With You 💍</h2>
-<p>You were my first love when I was a kid.<br>
+<h2 style="font-size:60px;">Forever With You 💍</h2>
+<p style="font-size:30px;">
+You were my first love when I was a kid.<br>
 You are my greatest love now.<br>
-And you will always be my future.</p>
+And you will always be my future.
+</p>
 </section>
 
 </div>
 
-<audio id="music" loop>
-<source src="manchala.mp3" type="audio/mpeg">
-</audio>
-
 <script>
 
-/* ================= PASSWORD ================= */
+/* CUSTOM CURSOR FOLLOW */
+const cursor=document.getElementById("cursor");
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
 
-const correctPassword = "iloveyou";
+/* FLOATING HEARTS */
+function createHeart(){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💗";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),10000);
+}
+setInterval(createHeart,400);
 
+/* PASSWORD */
 function checkPassword(){
-    let input = document.getElementById("passwordInput").value.trim();
-
-    if(input === "Little"){
-        document.getElementById("passwordScreen").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-    } else {
-        document.getElementById("wrongPass").innerText = "Wrong password 😌";
-    }
+let input=document.getElementById("passwordInput").value.trim();
+if(input==="Little"){
+passwordScreen.style.display="none";
+mainContent.style.display="block";
+}else{
+wrongPass.innerText="Wrong password 😌";
+}
 }
 
-
-/* ================= START ================= */
-
+/* START */
 function start(){
-document.getElementById("music").play();
 window.scrollTo({top:window.innerHeight,behavior:'smooth'});
 }
 
-/* ================= VALENTINE ================= */
-
-function noClicked(){
-document.getElementById("noMessage").innerText=
-"No, is not an option for you babbyy 😌";
-yesBtn.style.transform="scale(1.6)";
-noBtn.style.transform="scale(0.6)";
-}
-
-let currentRiddle=0;
-
-const riddles=[
-{question:"Who loved you first when we were 15? 😌",
-answers:["Some random guy","Rohan ❤️","Destiny"],
-correct:1},
-{question:"Where was our unforgettable surprise memory? 💖",
-answers:["At my home","In a cafe","On a trip"],
-correct:0},
-{question:"Who will choose you in every lifetime? 🌍",
-answers:["Time","Fate","Me ❤️"],
-correct:2}
-];
-
-function yesClicked(){
-document.getElementById("riddleSection").style.display="flex";
-document.getElementById("riddleSection")
-.scrollIntoView({behavior:'smooth'});
-showRiddle();
-}
-
-function showRiddle(){
-let r=riddles[currentRiddle];
-questionText.innerText=r.question;
-meter.innerText="Soulmate Level: "+currentRiddle+" / 3 💘";
-options.innerHTML="";
-
-r.answers.forEach((answer,index)=>{
-let btn=document.createElement("button");
-btn.innerText=answer;
-
-btn.onclick=function(){
-if(index===r.correct){
-let sound=new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
-sound.play();
-currentRiddle++;
-if(currentRiddle<riddles.length){
-showRiddle();
-}else{
-finalReveal();
-}
-}else{
-btn.classList.add("shake");
-setTimeout(()=>btn.classList.remove("shake"),400);
-}
-};
-
-options.appendChild(btn);
+/* NO BUTTON RUN AWAY */
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+let x=Math.random()*(window.innerWidth-200);
+let y=Math.random()*(window.innerHeight-100);
+noBtn.style.position="fixed";
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
 });
-}
 
+/* FINAL EXPLOSION */
 function finalReveal(){
 
-for(let i=0;i<200;i++){
+for(let i=0;i<500;i++){
 let kiss=document.createElement("div");
 kiss.className="kiss";
 kiss.innerHTML="💋";
 kiss.style.left="50%";
 kiss.style.top="50%";
-kiss.style.setProperty('--x',(Math.random()*3000-1500)+"px");
-kiss.style.setProperty('--y',(Math.random()*3000-1500)+"px");
+kiss.style.setProperty('--x',(Math.random()*7000-3500)+"px");
+kiss.style.setProperty('--y',(Math.random()*7000-3500)+"px");
 document.body.appendChild(kiss);
-setTimeout(()=>kiss.remove(),2000);
-}
-
-for(let i=0;i<60;i++){
-let petal=document.createElement("div");
-petal.className="petal";
-petal.innerHTML="🌹";
-petal.style.left=Math.random()*100+"vw";
-petal.style.animationDuration=(4+Math.random()*4)+"s";
-document.body.appendChild(petal);
-setTimeout(()=>petal.remove(),6000);
+setTimeout(()=>kiss.remove(),2500);
 }
 
 setTimeout(()=>{
