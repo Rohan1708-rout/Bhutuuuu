@@ -20,7 +20,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* Custom Cursor */
+/* Cursor */
 #cursor{
 position:fixed;
 font-size:24px;
@@ -45,6 +45,57 @@ opacity:0;
 }
 }
 
+/* PASSWORD SCREEN */
+#passwordScreen{
+position:fixed;
+width:100%;
+height:100vh;
+background:url('11.jpeg') center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+#passwordOverlay{
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+}
+
+#passwordBox{
+position:relative;
+z-index:2;
+text-align:center;
+}
+
+input{
+padding:15px;
+border-radius:30px;
+border:none;
+outline:none;
+width:300px;
+text-align:center;
+font-size:18px;
+}
+
+button{
+padding:18px 45px;
+border:none;
+border-radius:40px;
+background:#ff4d6d;
+color:white;
+font-size:20px;
+margin:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.15);
+}
+
 /* Sections */
 section{
 min-height:100vh;
@@ -66,22 +117,7 @@ display:flex;
 opacity:1;
 }
 
-button{
-padding:18px 45px;
-border:none;
-border-radius:40px;
-background:#ff4d6d;
-color:white;
-font-size:20px;
-margin:20px;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.15);
-}
-
+/* Carousel */
 .carousel{
 overflow:hidden;
 width:100%;
@@ -106,6 +142,7 @@ margin-right:20px;
 100%{transform:translateX(-50%);}
 }
 
+/* Shake */
 .shake{
 animation:shake 0.4s;
 }
@@ -123,6 +160,21 @@ animation:shake 0.4s;
 <body>
 
 <div id="cursor">💖</div>
+
+<!-- PASSWORD -->
+<div id="passwordScreen">
+<div id="passwordOverlay"></div>
+<div id="passwordBox">
+<h2 style="font-size:40px;">Enter Our Secret Code 💌</h2>
+<input type="password" id="passwordInput" placeholder="Enter password">
+<br><br>
+<button id="unlockBtn">Unlock ❤️</button>
+<p id="wrongPass" style="color:#ff99ac;"></p>
+</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent" style="display:none;">
 
 <section id="section1" class="active" style="background-image:url('8.jpeg');">
 <h1 style="font-size:70px;">Bhutu ❤️</h1>
@@ -164,14 +216,22 @@ animation:shake 0.4s;
 <h2 style="font-size:60px;">Forever With You 💍</h2>
 </section>
 
+</div>
+
 <audio id="music" loop>
 <source src="manchala.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-/* SAFE VARIABLE DECLARATION */
+/* Safe Variables */
 const cursor = document.getElementById("cursor");
+const unlockBtn = document.getElementById("unlockBtn");
+const passwordInput = document.getElementById("passwordInput");
+const wrongPass = document.getElementById("wrongPass");
+const passwordScreen = document.getElementById("passwordScreen");
+const mainContent = document.getElementById("mainContent");
+
 const startBtn = document.getElementById("startBtn");
 const toValentine = document.getElementById("toValentine");
 const yesBtn = document.getElementById("yesBtn");
@@ -186,7 +246,7 @@ cursor.style.left=e.clientX+"px";
 cursor.style.top=e.clientY+"px";
 });
 
-/* Floating hearts */
+/* Floating Hearts */
 setInterval(()=>{
 let heart=document.createElement("div");
 heart.className="heart";
@@ -197,7 +257,17 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),10000);
 },600);
 
-/* Section change */
+/* PASSWORD CHECK */
+unlockBtn.onclick=()=>{
+if(passwordInput.value.trim()==="Little"){
+passwordScreen.style.display="none";
+mainContent.style.display="block";
+}else{
+wrongPass.innerText="Wrong password 😌";
+}
+};
+
+/* Section switch */
 function showSection(id){
 document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
@@ -214,7 +284,7 @@ toValentine.onclick=()=>{
 showSection("section3");
 };
 
-/* NO button run away */
+/* NO run */
 noBtn.onmouseover=()=>{
 let x=Math.random()*(window.innerWidth-150);
 let y=Math.random()*(window.innerHeight-80);
@@ -223,10 +293,10 @@ noBtn.style.left=x+"px";
 noBtn.style.top=y+"px";
 };
 
-/* YES clicked */
+/* YES */
 yesBtn.onclick=()=>{
-noBtn.remove();   // completely removes NO
-yesBtn.remove();  // removes YES
+noBtn.remove();
+yesBtn.remove();
 showSection("riddleSection");
 showRiddle();
 };
