@@ -11,7 +11,7 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 scroll-behavior:smooth;
-cursor:none; /* hide default cursor */
+cursor:none;
 }
 
 body{
@@ -21,11 +21,11 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ================= CUSTOM HEART CURSOR ================= */
+/* ================= CUSTOM CURSOR ================= */
 
 #cursor{
 position:fixed;
-font-size:24px;
+font-size:26px;
 pointer-events:none;
 z-index:100000;
 transform:translate(-50%,-50%);
@@ -44,7 +44,7 @@ position:fixed;
 bottom:-20px;
 font-size:20px;
 animation:floatUp linear forwards;
-opacity:0.8;
+opacity:0.7;
 z-index:1;
 }
 
@@ -77,9 +77,9 @@ animation:cinema 3s ease-in-out;
 }
 
 @keyframes cinema{
-0%{letter-spacing:10px; opacity:0;}
-50%{letter-spacing:3px; opacity:1;}
-100%{letter-spacing:6px;}
+0%{letter-spacing:12px; opacity:0;}
+50%{letter-spacing:4px; opacity:1;}
+100%{letter-spacing:8px;}
 }
 
 @keyframes fadeOut{
@@ -186,17 +186,57 @@ animation:glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow{
-from{ text-shadow:0 0 15px #ff4d6d;}
-to{ text-shadow:0 0 40px #ff99ac;}
+from{ text-shadow:0 0 20px #ff4d6d;}
+to{ text-shadow:0 0 50px #ff99ac;}
 }
 
-/* NO BUTTON RUN AWAY */
+/* ================= CAROUSEL ================= */
 
-#noBtn{
-position:relative;
+.carousel{
+overflow:hidden;
+width:100%;
+margin-top:60px;
 }
 
-/* KISS EXPLOSION */
+.carousel-track{
+display:flex;
+width:calc(350px * 48);
+animation:scroll 45s linear infinite;
+}
+
+.carousel img{
+width:350px;
+height:420px;
+object-fit:cover;
+border-radius:20px;
+margin-right:20px;
+box-shadow:0 0 20px rgba(255,77,109,0.6);
+}
+
+.carousel:hover .carousel-track{
+animation-play-state:paused;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
+}
+
+/* SHAKE */
+
+@keyframes shake{
+0%{transform:translateX(0);}
+25%{transform:translateX(-10px);}
+50%{transform:translateX(10px);}
+75%{transform:translateX(-10px);}
+100%{transform:translateX(0);}
+}
+
+.shake{
+animation:shake 0.4s;
+}
+
+/* KISS */
 
 .kiss{
 position:fixed;
@@ -210,20 +250,23 @@ z-index:9999;
 100%{transform:translate(var(--x),var(--y)) scale(4);opacity:0;}
 }
 
+#meter{
+font-size:26px;
+color:#ff99ac;
+margin-top:30px;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- CUSTOM CURSOR -->
 <div id="cursor">💖</div>
 
-<!-- CINEMATIC INTRO -->
 <div id="intro">
 <h1>Our Love Story ❤️</h1>
 </div>
 
-<!-- PASSWORD -->
 <div id="passwordScreen">
 <div id="passwordBox">
 <h2 style="font-size:40px;">Enter Our Secret Code 💌</h2>
@@ -234,7 +277,6 @@ z-index:9999;
 </div>
 </div>
 
-<!-- MAIN -->
 <div id="mainContent">
 
 <section style="background-image:url('8.jpeg');">
@@ -243,10 +285,33 @@ z-index:9999;
 <button onclick="start()">Begin Our Story</button>
 </section>
 
+<section style="background-image:url('13.jpeg');">
+<h2 style="font-size:50px;">Our Memories</h2>
+<div class="carousel">
+<div class="carousel-track">
+<img src="1.jpeg"><img src="2.jpeg"><img src="3.jpeg">
+<img src="4.jpeg"><img src="5.jpeg"><img src="6.jpeg">
+<img src="7.jpeg"><img src="8.jpeg"><img src="9.jpeg">
+<img src="10.jpeg"><img src="11.jpeg"><img src="12.jpeg">
+<img src="13.jpeg"><img src="14.jpeg"><img src="15.jpeg">
+<img src="16.jpeg"><img src="17.jpeg"><img src="18.jpeg">
+<img src="19.jpeg"><img src="20.jpeg"><img src="21.jpeg">
+<img src="22.jpeg"><img src="23.jpeg"><img src="24.jpeg">
+</div>
+</div>
+</section>
+
 <section style="background-image:url('18.jpeg');">
 <h2 style="font-size:55px;">Will You Be My Valentine?</h2>
-<button id="yesBtn" onclick="finalReveal()">YES ❤️</button>
+<button id="yesBtn" onclick="yesClicked()">YES ❤️</button>
 <button id="noBtn">NO 🙈</button>
+</section>
+
+<section id="riddleSection" style="background-image:url('26.jpeg'); display:none;">
+<h2 style="font-size:50px;">Before Forever… One Small Challenge 😌</h2>
+<p id="questionText" style="font-size:28px;"></p>
+<div id="options"></div>
+<div id="meter"></div>
 </section>
 
 <section id="finalSection" style="background-image:url('25.jpeg'); display:none;">
@@ -260,10 +325,13 @@ And you will always be my future.
 
 </div>
 
+<audio id="music" loop>
+<source src="manchala.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
-/* CUSTOM CURSOR FOLLOW */
-const cursor=document.getElementById("cursor");
+/* CURSOR */
 document.addEventListener("mousemove",e=>{
 cursor.style.left=e.clientX+"px";
 cursor.style.top=e.clientY+"px";
@@ -279,12 +347,11 @@ heart.style.animationDuration=(5+Math.random()*5)+"s";
 document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),10000);
 }
-setInterval(createHeart,400);
+setInterval(createHeart,500);
 
 /* PASSWORD */
 function checkPassword(){
-let input=document.getElementById("passwordInput").value.trim();
-if(input==="Little"){
+if(passwordInput.value.trim()==="Little"){
 passwordScreen.style.display="none";
 mainContent.style.display="block";
 }else{
@@ -294,11 +361,11 @@ wrongPass.innerText="Wrong password 😌";
 
 /* START */
 function start(){
+music.play();
 window.scrollTo({top:window.innerHeight,behavior:'smooth'});
 }
 
-/* NO BUTTON RUN AWAY */
-const noBtn=document.getElementById("noBtn");
+/* NO BUTTON RUN */
 noBtn.addEventListener("mouseover",()=>{
 let x=Math.random()*(window.innerWidth-200);
 let y=Math.random()*(window.innerHeight-100);
@@ -307,17 +374,73 @@ noBtn.style.left=x+"px";
 noBtn.style.top=y+"px";
 });
 
+/* RIDDLES */
+
+let currentRiddle=0;
+
+const riddles=[
+{question:"Who loved you first when we were 15? 😌",
+answers:["Some random guy","Rohan ❤️","Destiny"],
+correct:1},
+{question:"Where was our unforgettable surprise memory? 💖",
+answers:["At my home","In a cafe","On a trip"],
+correct:0},
+{question:"Who will choose you in every lifetime? 🌍",
+answers:["Time","Fate","Me ❤️"],
+correct:2}
+];
+
+function yesClicked(){
+
+// Hide both buttons completely
+document.getElementById("yesBtn").style.display = "none";
+document.getElementById("noBtn").style.display = "none";
+
+riddleSection.style.display="flex";
+riddleSection.scrollIntoView({behavior:'smooth'});
+showRiddle();
+}
+
+function showRiddle(){
+let r=riddles[currentRiddle];
+questionText.innerText=r.question;
+meter.innerText="Soulmate Level: "+currentRiddle+" / 3 💘";
+options.innerHTML="";
+
+r.answers.forEach((answer,index)=>{
+let btn=document.createElement("button");
+btn.innerText=answer;
+
+btn.onclick=function(){
+if(index===r.correct){
+currentRiddle++;
+if(currentRiddle<riddles.length){
+showRiddle();
+}else{
+finalReveal();
+}
+}else{
+btn.classList.add("shake");
+setTimeout(()=>btn.classList.remove("shake"),400);
+}
+};
+
+options.appendChild(btn);
+});
+}
+
 /* FINAL EXPLOSION */
 function finalReveal(){
 
-for(let i=0;i<500;i++){
+document.getElementById("noBtn").style.display = "none";
+for(let i=0;i<400;i++){
 let kiss=document.createElement("div");
 kiss.className="kiss";
 kiss.innerHTML="💋";
 kiss.style.left="50%";
 kiss.style.top="50%";
-kiss.style.setProperty('--x',(Math.random()*7000-3500)+"px");
-kiss.style.setProperty('--y',(Math.random()*7000-3500)+"px");
+kiss.style.setProperty('--x',(Math.random()*6000-3000)+"px");
+kiss.style.setProperty('--y',(Math.random()*6000-3000)+"px");
 document.body.appendChild(kiss);
 setTimeout(()=>kiss.remove(),2500);
 }
