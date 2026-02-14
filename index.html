@@ -9,7 +9,6 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-scroll-behavior:smooth;
 cursor:none;
 }
 
@@ -20,22 +19,23 @@ color:white;
 overflow-x:hidden;
 }
 
-/* Cursor */
+/* CUSTOM HEART CURSOR */
 #cursor{
 position:fixed;
-font-size:24px;
+font-size:22px;
 pointer-events:none;
 z-index:100000;
 transform:translate(-50%,-50%);
 }
 
-/* Floating Hearts */
+/* FLOATING HEARTS */
 .heart{
 position:fixed;
 bottom:-20px;
-font-size:20px;
+font-size:18px;
 animation:floatUp linear forwards;
 opacity:0.7;
+z-index:1;
 }
 
 @keyframes floatUp{
@@ -75,28 +75,12 @@ padding:15px;
 border-radius:30px;
 border:none;
 outline:none;
-width:300px;
+width:280px;
 text-align:center;
 font-size:18px;
 }
 
-button{
-padding:18px 45px;
-border:none;
-border-radius:40px;
-background:#ff4d6d;
-color:white;
-font-size:20px;
-margin:20px;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.15);
-}
-
-/* Sections */
+/* SECTIONS */
 section{
 min-height:100vh;
 display:none;
@@ -117,7 +101,23 @@ display:flex;
 opacity:1;
 }
 
-/* Carousel */
+button{
+padding:16px 40px;
+border:none;
+border-radius:40px;
+background:#ff4d6d;
+color:white;
+font-size:20px;
+margin:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.15);
+}
+
+/* CAROUSEL */
 .carousel{
 overflow:hidden;
 width:100%;
@@ -130,8 +130,8 @@ animation:scroll 40s linear infinite;
 }
 
 .carousel img{
-width:300px;
-height:400px;
+width:280px;
+height:380px;
 object-fit:cover;
 border-radius:20px;
 margin-right:20px;
@@ -142,16 +142,16 @@ margin-right:20px;
 100%{transform:translateX(-50%);}
 }
 
-/* Shake */
+/* SHAKE */
 .shake{
 animation:shake 0.4s;
 }
 
 @keyframes shake{
 0%{transform:translateX(0);}
-25%{transform:translateX(-10px);}
-50%{transform:translateX(10px);}
-75%{transform:translateX(-10px);}
+25%{transform:translateX(-8px);}
+50%{transform:translateX(8px);}
+75%{transform:translateX(-8px);}
 100%{transform:translateX(0);}
 }
 </style>
@@ -161,11 +161,11 @@ animation:shake 0.4s;
 
 <div id="cursor">💖</div>
 
-<!-- PASSWORD -->
+<!-- PASSWORD SCREEN -->
 <div id="passwordScreen">
 <div id="passwordOverlay"></div>
 <div id="passwordBox">
-<h2 style="font-size:40px;">Enter Our Secret Code 💌</h2>
+<h2 style="font-size:38px;">Enter Our Secret Code 💌</h2>
 <input type="password" id="passwordInput" placeholder="Enter password">
 <br><br>
 <button id="unlockBtn">Unlock ❤️</button>
@@ -173,10 +173,10 @@ animation:shake 0.4s;
 </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT (HIDDEN FIRST) -->
 <div id="mainContent" style="display:none;">
 
-<section id="section1" class="active" style="background-image:url('8.jpeg');">
+<section id="section1" style="background-image:url('8.jpeg');">
 <h1 style="font-size:70px;">Bhutu ❤️</h1>
 <button id="startBtn">Begin</button>
 </section>
@@ -224,7 +224,7 @@ animation:shake 0.4s;
 
 <script>
 
-/* Safe Variables */
+/* SAFE VARIABLES */
 const cursor = document.getElementById("cursor");
 const unlockBtn = document.getElementById("unlockBtn");
 const passwordInput = document.getElementById("passwordInput");
@@ -240,13 +240,13 @@ const music = document.getElementById("music");
 const questionText = document.getElementById("questionText");
 const options = document.getElementById("options");
 
-/* Cursor */
+/* HEART CURSOR */
 document.addEventListener("mousemove",e=>{
 cursor.style.left=e.clientX+"px";
 cursor.style.top=e.clientY+"px";
 });
 
-/* Floating Hearts */
+/* FLOATING HEARTS */
 setInterval(()=>{
 let heart=document.createElement("div");
 heart.className="heart";
@@ -257,35 +257,36 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),10000);
 },600);
 
-/* PASSWORD CHECK */
-unlockBtn.onclick=()=>{
+/* PASSWORD */
+unlockBtn.onclick=function(){
 if(passwordInput.value.trim()==="Little"){
 passwordScreen.style.display="none";
 mainContent.style.display="block";
+showSection("section1");
 }else{
 wrongPass.innerText="Wrong password 😌";
 }
 };
 
-/* Section switch */
+/* SECTION SWITCH */
 function showSection(id){
-document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.querySelectorAll("section").forEach(sec=>sec.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-/* Start */
-startBtn.onclick=()=>{
+/* START */
+startBtn.onclick=function(){
 music.play().catch(()=>{});
 showSection("section2");
 };
 
-/* Next */
-toValentine.onclick=()=>{
+/* NEXT */
+toValentine.onclick=function(){
 showSection("section3");
 };
 
-/* NO run */
-noBtn.onmouseover=()=>{
+/* NO RUN */
+noBtn.onmouseover=function(){
 let x=Math.random()*(window.innerWidth-150);
 let y=Math.random()*(window.innerHeight-80);
 noBtn.style.position="fixed";
@@ -293,15 +294,15 @@ noBtn.style.left=x+"px";
 noBtn.style.top=y+"px";
 };
 
-/* YES */
-yesBtn.onclick=()=>{
+/* YES CLICK */
+yesBtn.onclick=function(){
 noBtn.remove();
 yesBtn.remove();
 showSection("riddleSection");
 showRiddle();
 };
 
-/* Riddles */
+/* RIDDLES */
 let current=0;
 
 const riddles=[
@@ -318,7 +319,7 @@ options.innerHTML="";
 r.a.forEach((text,index)=>{
 let btn=document.createElement("button");
 btn.innerText=text;
-btn.onclick=()=>{
+btn.onclick=function(){
 if(index===r.c){
 current++;
 if(current<riddles.length){
