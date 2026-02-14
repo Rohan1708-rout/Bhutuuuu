@@ -21,7 +21,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ================= CUSTOM CURSOR ================= */
+/* CUSTOM CURSOR */
 
 #cursor{
 position:fixed;
@@ -37,7 +37,7 @@ from{transform:translate(-50%,-50%) scale(1);}
 to{transform:translate(-50%,-50%) scale(1.4);}
 }
 
-/* ================= FLOATING HEARTS ================= */
+/* FLOATING HEARTS */
 
 .heart{
 position:fixed;
@@ -55,7 +55,7 @@ opacity:0;
 }
 }
 
-/* ================= CINEMATIC INTRO ================= */
+/* CINEMATIC INTRO */
 
 #intro{
 position:fixed;
@@ -86,7 +86,7 @@ animation:cinema 3s ease-in-out;
 to{opacity:0; visibility:hidden;}
 }
 
-/* ================= PASSWORD ================= */
+/* PASSWORD */
 
 #passwordScreen{
 position:fixed;
@@ -144,7 +144,7 @@ color:#ff99ac;
 margin-top:20px;
 }
 
-/* ================= MAIN ================= */
+/* MAIN CONTENT */
 
 #mainContent{
 display:none;
@@ -162,6 +162,12 @@ position:relative;
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
+opacity:0;
+transition:opacity 1.2s ease;
+}
+
+section.active{
+opacity:1;
 }
 
 section::before{
@@ -190,7 +196,7 @@ from{ text-shadow:0 0 20px #ff4d6d;}
 to{ text-shadow:0 0 50px #ff99ac;}
 }
 
-/* ================= CAROUSEL ================= */
+/* CAROUSEL */
 
 .carousel{
 overflow:hidden;
@@ -236,7 +242,7 @@ animation-play-state:paused;
 animation:shake 0.4s;
 }
 
-/* KISS */
+/* KISS EXPLOSION */
 
 .kiss{
 position:fixed;
@@ -279,13 +285,13 @@ margin-top:30px;
 
 <div id="mainContent">
 
-<section style="background-image:url('8.jpeg');">
+<section id="section1" style="background-image:url('8.jpeg');">
 <h1 class="glow">Bhutu ❤️</h1>
 <p style="font-size:28px;">From stranger… to forever.</p>
 <button onclick="start()">Begin Our Story</button>
 </section>
 
-<section style="background-image:url('13.jpeg');">
+<section id="section2" style="background-image:url('13.jpeg');">
 <h2 style="font-size:50px;">Our Memories</h2>
 <div class="carousel">
 <div class="carousel-track">
@@ -301,7 +307,7 @@ margin-top:30px;
 </div>
 </section>
 
-<section style="background-image:url('18.jpeg');">
+<section id="section3" style="background-image:url('18.jpeg');">
 <h2 style="font-size:55px;">Will You Be My Valentine?</h2>
 <button id="yesBtn" onclick="yesClicked()">YES ❤️</button>
 <button id="noBtn">NO 🙈</button>
@@ -354,6 +360,7 @@ function checkPassword(){
 if(passwordInput.value.trim()==="Little"){
 passwordScreen.style.display="none";
 mainContent.style.display="block";
+document.getElementById("section1").classList.add("active");
 }else{
 wrongPass.innerText="Wrong password 😌";
 }
@@ -362,10 +369,21 @@ wrongPass.innerText="Wrong password 😌";
 /* START */
 function start(){
 music.play();
-window.scrollTo({top:window.innerHeight,behavior:'smooth'});
+fadeToSection("section2");
 }
 
-/* NO BUTTON RUN */
+/* SMOOTH FADE FUNCTION */
+function fadeToSection(id){
+document.querySelectorAll("section").forEach(sec=>sec.classList.remove("active"));
+let target=document.getElementById(id);
+target.style.display="flex";
+setTimeout(()=>{
+target.classList.add("active");
+target.scrollIntoView({behavior:"smooth"});
+},100);
+}
+
+/* NO BUTTON */
 noBtn.addEventListener("mouseover",()=>{
 let x=Math.random()*(window.innerWidth-200);
 let y=Math.random()*(window.innerHeight-100);
@@ -373,6 +391,14 @@ noBtn.style.position="fixed";
 noBtn.style.left=x+"px";
 noBtn.style.top=y+"px";
 });
+
+/* YES CLICK */
+function yesClicked(){
+yesBtn.style.display="none";
+noBtn.style.display="none";
+fadeToSection("riddleSection");
+showRiddle();
+}
 
 /* RIDDLES */
 
@@ -389,17 +415,6 @@ correct:0},
 answers:["Time","Fate","Me ❤️"],
 correct:2}
 ];
-
-function yesClicked(){
-
-// Hide both buttons completely
-document.getElementById("yesBtn").style.display = "none";
-document.getElementById("noBtn").style.display = "none";
-
-riddleSection.style.display="flex";
-riddleSection.scrollIntoView({behavior:'smooth'});
-showRiddle();
-}
 
 function showRiddle(){
 let r=riddles[currentRiddle];
@@ -429,10 +444,10 @@ options.appendChild(btn);
 });
 }
 
-/* FINAL EXPLOSION */
+/* FINAL */
 function finalReveal(){
+fadeToSection("finalSection");
 
-document.getElementById("noBtn").style.display = "none";
 for(let i=0;i<400;i++){
 let kiss=document.createElement("div");
 kiss.className="kiss";
@@ -444,11 +459,6 @@ kiss.style.setProperty('--y',(Math.random()*6000-3000)+"px");
 document.body.appendChild(kiss);
 setTimeout(()=>kiss.remove(),2500);
 }
-
-setTimeout(()=>{
-finalSection.style.display="flex";
-finalSection.scrollIntoView({behavior:'smooth'});
-},1500);
 }
 
 </script>
